@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
-import 'package:to_do_list/controllers/edit_to_do_controller.dart';
-import 'package:to_do_list/controllers/home_page_controller.dart';
-import 'package:to_do_list/controllers/start_up_controller/onboarding_page_controller.dart';
-import 'package:to_do_list/controllers/start_up_controller/splash_page_controller.dart';
-import 'package:to_do_list/views/edit_to_do_page.dart';
-import 'package:to_do_list/views/home_page.dart';
-import 'package:to_do_list/views/stat_up_pages/onboarding_page.dart';
-import 'package:to_do_list/views/stat_up_pages/splash_page.dart';
-import 'package:to_do_list/views/unknow_route_page.dart';
+import 'package:to_do_list/features/home/controllers/edit_to_do_controller.dart';
+import 'package:to_do_list/features/home/controllers/home_page_controller.dart';
+import 'package:to_do_list/features/home/views/edit_to_do_page.dart';
+import 'package:to_do_list/features/home/views/home_page.dart';
+import 'package:to_do_list/features/startUp/controller/onboarding_page_controller.dart';
+import 'package:to_do_list/features/startUp/controller/splash_page_controller.dart';
+import 'package:to_do_list/features/startUp/views/splash_page.dart';
+import 'package:to_do_list/features/startUp/views/onboarding_page.dart';
+import 'package:to_do_list/core/routes/unknow_route_page.dart';
 
 part 'app_routes.dart';
 

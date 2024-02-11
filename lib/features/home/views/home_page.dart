@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_do_list/controllers/home_page_controller.dart';
 import 'package:to_do_list/core/routes/app_pages.dart';
 import 'package:to_do_list/core/utils/design_utils.dart';
 import 'package:to_do_list/core/widgets/buttons/core_flat_button.dart';
 import 'package:to_do_list/core/widgets/core_textField.dart';
+import 'package:to_do_list/features/home/controllers/home_page_controller.dart';
 import 'package:transformable_list_view/transformable_list_view.dart';
 
 class HomePage extends GetWidget<HomePageController> {

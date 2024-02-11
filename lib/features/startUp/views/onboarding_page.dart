@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_do_list/controllers/start_up_controller/onboarding_page_controller.dart';
+import 'package:to_do_list/features/startUp/controller/onboarding_page_controller.dart';
 import 'package:to_do_list/core/widgets/buttons/core_flat_button.dart';
 
 class OnboardingPage extends GetWidget<OnboardingPageController> {
