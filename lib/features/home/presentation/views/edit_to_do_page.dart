@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list/core/utils/design_utils.dart';
 import 'package:to_do_list/core/widgets/core_textField.dart';
-import 'package:to_do_list/features/home/controllers/edit_to_do_controller.dart';
+import 'package:to_do_list/features/home/presentation/controllers/edit_to_do_controller.dart';
 
 class EditToDoPage extends GetWidget<EditToDoPageController> {
   const EditToDoPage({super.key});

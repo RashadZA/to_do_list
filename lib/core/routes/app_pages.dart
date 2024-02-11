@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:to_do_list/features/home/controllers/edit_to_do_controller.dart';
-import 'package:to_do_list/features/home/controllers/home_page_controller.dart';
-import 'package:to_do_list/features/home/views/edit_to_do_page.dart';
-import 'package:to_do_list/features/home/views/home_page.dart';
+import 'package:to_do_list/features/home/presentation/controllers/edit_to_do_controller.dart';
+import 'package:to_do_list/features/home/presentation/controllers/home_page_controller.dart';
+import 'package:to_do_list/features/home/presentation/views/edit_to_do_page.dart';
+import 'package:to_do_list/features/home/presentation/views/home_page.dart';
 import 'package:to_do_list/features/startUp/controller/onboarding_page_controller.dart';
 import 'package:to_do_list/features/startUp/controller/splash_page_controller.dart';
 import 'package:to_do_list/features/startUp/views/splash_page.dart';

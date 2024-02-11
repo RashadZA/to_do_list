@@ -52,6 +52,7 @@ extension WidgetExtension on Widget {
           radius: radius ?? 10.0,
         ),
       );
+
   Widget defaultFloatingActionButton({
     Color? iconColor,
     double? iconSize,

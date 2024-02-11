@@ -45,7 +45,7 @@ class DatabaseHelper  {
   void _createDb(Database db, int newVersion) async {
 
     await db.execute(
-        'CREATE TABLE IF NOT EXISTS toDoTable( id TEXT PRIMARY KEY , toDoKey TEXT, toDoTitle TEXT, toDoDetails TEXT, toDoCreatedTime TEXT, toDoUploaded BOOLEAN, toDoCompleted BOOLEAN)');
+        'CREATE TABLE IF NOT EXISTS toDoTable( id INTEGER PRIMARY KEY AUTOINCREMENT, toDoKey TEXT, toDoTitle TEXT, toDoDetails TEXT, toDoCreatedTime TEXT, toDoUploaded INTEGER, toDoCompleted INTEGER)');
 
   }
 
