@@ -1,7 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:to_do_list/core/localDatabase/database_helper.dart';
 import 'package:to_do_list/core/routes/app_pages.dart';
+import 'package:to_do_list/core/utils/design_utils.dart';
 
 class OnboardingPageController extends GetxController {
 
@@ -19,7 +24,20 @@ class OnboardingPageController extends GetxController {
 
   Future<void> getStartButtonOnPressed() async {
     getStartButtonIsTapped.value = true;
+    await Permission.storage.request();
+    PermissionStatus status = await Permission.storage.status;
+    if(status.isGranted){
+      Database db = await DatabaseHelper().database;
+      debugPrint("Database Status: ${db.isOpen}");
       getStartButtonIsTapped.value = false;
       Get.offAllNamed(Routes.home);
+    }else{
+      "Please give storage permission for creating database for saving to do list".infoSnackBar();
+      if(status.isPermanentlyDenied){
+        openAppSettings();
+      }
+      getStartButtonIsTapped.value = false;
+    }
+
   }
 }

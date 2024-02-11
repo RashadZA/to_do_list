@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:to_do_list/core/localDatabase/folder_helper.dart';
 import 'package:to_do_list/core/routes/app_pages.dart';
-import 'package:to_do_list/main.dart';
 
 class SplashPageController extends GetxController {
 
@@ -14,7 +15,12 @@ class SplashPageController extends GetxController {
   }
 
   Future<void> init() async {
-    Future.delayed(Duration(seconds: 3)).then((value) => Get.offAllNamed(Routes.onboarding));
+    String savePath = await Folder().getDBDirectoryPath();
+    if (await File(savePath).exists()) {
+      Get.offAllNamed(Routes.home);
+    }else{
+      Get.offAllNamed(Routes.onboarding);
+    }
   }
 
 }

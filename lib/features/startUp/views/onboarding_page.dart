@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_list/core/utils/design_utils.dart';
 import 'package:to_do_list/features/startUp/controller/onboarding_page_controller.dart';
 import 'package:to_do_list/core/widgets/buttons/core_flat_button.dart';
 
@@ -17,7 +18,7 @@ class OnboardingPage extends GetWidget<OnboardingPageController> {
               SizedBox(
                   width: Get.width,
                   height: Get.height,
-                  child: Image.asset("assets/icons/logo.png",fit: BoxFit.fill,)),
+                  child: Image.asset(logoPath,fit: BoxFit.fill,)),
               Positioned(
                 bottom: 40,
                 left: Get.width * 0.25,

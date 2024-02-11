@@ -10,3 +10,4 @@ part 'app_theme.dart';
 part 'app_text_theme.dart';
 part 'app_contants.dart';
 part 'app_validators.dart';
+part 'app_const_string.dart';
