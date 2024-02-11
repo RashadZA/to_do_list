@@ -5,6 +5,10 @@ class AppColors{
 
   static const Color backgroundColor = Color(0xFFDBD1CF);
 
+  static const Color coreTextFieldBackgroundColor = Colors.white;
+
+  static const Color coreTextFieldShadowColor = Color(0xFFA9A2A0);
+
   static const Color white = Colors.white;
 
   static const Color black = Colors.black;

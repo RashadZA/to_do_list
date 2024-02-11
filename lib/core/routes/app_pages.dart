@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:to_do_list/controllers/home_page_controller.dart';
 import 'package:to_do_list/controllers/start_up_controller/onboarding_page_controller.dart';
 import 'package:to_do_list/controllers/start_up_controller/splash_page_controller.dart';
+import 'package:to_do_list/views/home_page.dart';
 import 'package:to_do_list/views/stat_up_pages/onboarding_page.dart';
 import 'package:to_do_list/views/stat_up_pages/splash_page.dart';
 import 'package:to_do_list/views/unknow_route_page.dart';
@@ -25,6 +27,13 @@ class AppPages {
       page: () => const OnboardingPage(),
       binding: BindingsBuilder(
             () => Get.lazyPut<OnboardingPageController>(() => OnboardingPageController()),
+      ),
+    ),
+    GetPage(
+      name: _Paths.home,
+      page: () => const HomePage(),
+      binding: BindingsBuilder(
+            () => Get.lazyPut<HomePageController>(() => HomePageController()),
       ),
     ),
   ];
