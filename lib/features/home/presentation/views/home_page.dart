@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list/core/routes/app_pages.dart';
 import 'package:to_do_list/core/utils/design_utils.dart';
-import 'package:to_do_list/core/widgets/buttons/core_flat_button.dart';
 import 'package:to_do_list/core/widgets/core_textField.dart';
 import 'package:to_do_list/features/home/data/models/to_do_model.dart';
 import 'package:to_do_list/features/home/presentation/controllers/home_page_controller.dart';
@@ -80,7 +79,7 @@ class HomePage extends GetWidget<HomePageController> {
                               ),
                               trailing: IconButton(
                                 onPressed: () =>
-                                    Get.toNamed(Routes.editToDo),
+                                    Get.toNamed(Routes.editToDo,parameters: {"todo": todo.toString(),}),
                                 icon: const Icon(Icons.edit),
                               ),
                               minVerticalPadding: 0.0,
@@ -110,13 +109,10 @@ class HomePage extends GetWidget<HomePageController> {
           },
         ),
       ),
-      floatingActionButton: Obx(() => !controller.updatingToDoAsCompletedOrNot.value
-          ? defaultFloatingActionButton(
+      floatingActionButton: Obx(() =>  defaultFloatingActionButton(
+        isLoading: controller.updatingToDoAsCompletedOrNot.value,
         onPressed: () => Get.dialog(const AddToDoListDialog(),
             barrierDismissible: controller.dialogAddButtonIsTapped.value),
-      ) : const SizedBox(
-        height: 0.0,
-        width: 0.0,
       ),),
     );
   }

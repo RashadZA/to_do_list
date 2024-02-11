@@ -58,9 +58,14 @@ extension WidgetExtension on Widget {
     double? iconSize,
     required void Function() onPressed,
     IconData? icon,
+    bool isLoading = false,
   }) =>
       FloatingActionButton(
-        onPressed: onPressed,
+        onPressed: (){
+          if(!isLoading){
+            onPressed();
+          }
+        },
         child: Container(
           width: double.infinity,
           height: double.infinity,
@@ -76,7 +81,7 @@ extension WidgetExtension on Widget {
               ],
             ),
           ),
-          child:  Icon(icon ?? Icons.add, size: iconSize, color: iconColor,),
+          child: isLoading ? defaultLoader(color: iconColor, radius: iconSize) : Icon(icon ?? Icons.add, size: iconSize, color: iconColor,),
         ),
       );
 }

@@ -25,13 +25,6 @@ class ToDoTable {
         .toList();
   }
 
-  Future<ToDoModel> getAssignTable(ToDoModel toDoModel) async {
-    Database db = await DatabaseHelper().database;
-    List<Map<String, Object?>> result = await db.query(toDoTable,
-        where: "$id == ${toDoModel.id} AND $toDoKey == ${toDoModel.toDoKey}");
-    return ToDoModel.fromMapDataToModel(result[0]);
-  }
-
   Future insertToDo({
     required String todoKey,
     required String todoTitle,
@@ -76,5 +69,41 @@ class ToDoTable {
           (todo) => ToDoModel.fromMapDataToModel(todo),
         )
         .toList();
+  }
+  Future updateToDoFullDetails({
+    required String todoID,
+    required String todoKey,
+    required String todoTitle,
+    required String todoDetails,
+    required String todoCreatedTime,
+    required int todoCompleted,
+    required int todoUploaded,
+  }) async {
+    Database db = await DatabaseHelper().database;
+    Map<String, Object?> row = {
+      id: todoID,
+      toDoKey: todoKey,
+      toDoTitle: todoTitle,
+      toDoDetails: todoDetails,
+      toDoCreatedTime: todoCreatedTime,
+      toDoCompleted: todoCompleted,
+      toDoUploaded: todoUploaded,
+    };
+    int result = await db.update(
+      toDoTable,
+      row,
+      where: "$id == $todoID AND $toDoKey == '$todoKey'"
+    );
+    debugPrint("Result in full update todo: $result");
+    return result;
+  }
+
+  Future deleteToDo(ToDoModel todoModel) async {
+    Database db = await DatabaseHelper().database;
+    int result = await db.rawDelete(
+        "DELETE FROM $toDoTable WHERE $id = ${todoModel.id} AND $toDoKey = '${todoModel.toDoKey}'"
+    );
+    debugPrint("Result in delete todo: $result");
+    return result;
   }
 }

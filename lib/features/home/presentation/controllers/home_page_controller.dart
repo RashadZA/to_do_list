@@ -62,7 +62,7 @@ class HomePageController extends GetxController {
     dialogAddButtonIsTapped.value = true;
     if (toDoListFormKey.currentState!.validate()) {
       String todoId = const Uuid().v1();
-      ToDoTable().insertToDo(
+      await ToDoTable().insertToDo(
         todoKey: todoId,
         todoTitle: toDoListTitleTextEditController.text,
         todoDetails: toDoListDescriptionTextEditController.text,

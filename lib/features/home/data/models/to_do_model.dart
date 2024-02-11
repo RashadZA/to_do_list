@@ -44,13 +44,24 @@ class ToDoModel {
     );
   }
 
-  String toJson() => json.encode(toMap());
+
+  // String toJson() => json.encode(toMap());
 
   factory ToDoModel.fromJson(String source) => ToDoModel.fromMapDataToModel(json.decode(source) as Map<String, dynamic>);
 
+  factory ToDoModel.defaultModel() {
+    return ToDoModel(
+      id: "",
+      toDoKey: "",
+      toDoTitle: "",
+      toDoDetails: "",
+      toDoCreatedTime:   "",
+      toDoUploaded:  false,
+      toDoCompleted: false,
+    );
+  }
   @override
   String toString() {
     return '{"id": "$id", "toDoKey": "$toDoKey", "toDoTitle": "$toDoTitle", "toDoDetails": "$toDoDetails", "toDoCreatedTime": "$toDoCreatedTime", "toDoUploaded": $toDoUploaded, "toDoCompleted": $toDoCompleted}';
   }
-
 }
