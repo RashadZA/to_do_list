@@ -52,6 +52,32 @@ extension WidgetExtension on Widget {
           radius: radius ?? 10.0,
         ),
       );
+  Widget defaultFloatingActionButton({
+    Color? iconColor,
+    double? iconSize,
+    required void Function() onPressed,
+    IconData? icon,
+  }) =>
+      FloatingActionButton(
+        onPressed: onPressed,
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: AppColors.white,
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AppColors.gradientStartColor,
+                AppColors.gradientEndColor,
+              ],
+            ),
+          ),
+          child:  Icon(icon ?? Icons.add, size: iconSize, color: iconColor,),
+        ),
+      );
 }
 
 extension StringExtension on String {

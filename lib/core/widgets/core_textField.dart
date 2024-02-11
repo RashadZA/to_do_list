@@ -76,7 +76,7 @@ class CoreTextField extends StatelessWidget {
   static OutlineInputBorder errorBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(16),
     borderSide:
-        BorderSide(width: 0, color: AppColors.coreTextFieldBackgroundColor.withOpacity(.5)),
+        const BorderSide(width: 1, color: AppColors.redAccent,),
   );
 
   @override

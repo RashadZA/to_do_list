@@ -6,6 +6,7 @@ abstract class Routes {
   static const splash = _Paths.splash;
   static const onboarding = _Paths.onboarding;
   static const home = _Paths.home;
+  static const editToDo = home + _Paths.editToDo;
  }
 
 abstract class _Paths {
@@ -13,4 +14,5 @@ abstract class _Paths {
   static const splash = '/splash';
   static const onboarding = '/onboarding';
   static const home = '/home';
+  static const editToDo = '$home/editToDo';
 }

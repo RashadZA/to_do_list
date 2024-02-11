@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:to_do_list/controllers/edit_to_do_controller.dart';
 import 'package:to_do_list/controllers/home_page_controller.dart';
 import 'package:to_do_list/controllers/start_up_controller/onboarding_page_controller.dart';
 import 'package:to_do_list/controllers/start_up_controller/splash_page_controller.dart';
+import 'package:to_do_list/views/edit_to_do_page.dart';
 import 'package:to_do_list/views/home_page.dart';
 import 'package:to_do_list/views/stat_up_pages/onboarding_page.dart';
 import 'package:to_do_list/views/stat_up_pages/splash_page.dart';
@@ -35,6 +37,15 @@ class AppPages {
       binding: BindingsBuilder(
             () => Get.lazyPut<HomePageController>(() => HomePageController()),
       ),
+      children: [
+        GetPage(
+          name: _Paths.editToDo,
+          page: () => const EditToDoPage(),
+          binding: BindingsBuilder(
+                () => Get.lazyPut<EditToDoPageController>(() => EditToDoPageController()),
+          ),
+        ),
+      ],
     ),
   ];
 }

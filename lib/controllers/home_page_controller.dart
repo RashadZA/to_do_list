@@ -13,6 +13,7 @@ class HomePageController extends GetxController {
   final GlobalKey<FormState> toDoListFormKey = GlobalKey<FormState>();
 
   RxBool searchButtonIsTapped = false.obs;
+  RxBool checkBoxIsTapped = false.obs;
 
   @override
   void onInit() {
@@ -37,5 +38,8 @@ class HomePageController extends GetxController {
     toDoListTitleTextEditController.clear();
     toDoListDescriptionTextEditController.clear();
     Get.back();
+  }
+  Future<void> checkBoxButtonOnChanged(bool? status) async {
+    checkBoxIsTapped.value = status ?? false;
   }
 }

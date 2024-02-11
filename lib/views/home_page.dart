@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list/controllers/home_page_controller.dart';
+import 'package:to_do_list/core/routes/app_pages.dart';
 import 'package:to_do_list/core/utils/design_utils.dart';
 import 'package:to_do_list/core/widgets/buttons/core_flat_button.dart';
 import 'package:to_do_list/core/widgets/core_textField.dart';
@@ -32,7 +33,6 @@ class HomePage extends GetWidget<HomePageController> {
                   onPressed: controller.searchButtonOnPressed,
                 ),
               ).paddingOnly(left: 16, right: 16),
-
               Expanded(
                 child: TransformableListView.builder(
                   itemCount: 20,
@@ -45,10 +45,14 @@ class HomePage extends GetWidget<HomePageController> {
                   getTransformMatrix: getTransformMatrix,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      leading: const Icon(
-                        Icons.check_box,
-                        color: AppColors.primaryColor,
-                      ),
+                      hoverColor: AppColors.backgroundColor,
+                      onTap: () => Get.toNamed(Routes.editToDo),
+                      leading:  Obx(() => Checkbox(
+                        checkColor: AppColors.green,
+                        activeColor: AppColors.backgroundColor,
+                        value: controller.checkBoxIsTapped.value,
+                        onChanged: (bool? value) => controller.checkBoxButtonOnChanged(value),
+                      )),
                       minVerticalPadding: 0.0,
                       contentPadding: const EdgeInsets.all(0),
                       title: Text(
@@ -64,26 +68,9 @@ class HomePage extends GetWidget<HomePageController> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: defaultFloatingActionButton(
         onPressed: () => Get.dialog(
           const AddToDoListDialog(),
-        ),
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: AppColors.white,
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.gradientStartColor,
-                AppColors.gradientEndColor,
-              ],
-            ),
-          ),
-          child: const Icon(Icons.add),
         ),
       ),
     );
@@ -133,7 +120,7 @@ class AddToDoListDialog extends GetWidget<HomePageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: 70,
+                    width: 80,
                     child: CoreFlatButton(
                       text: "Cancel",
                       textColor: AppColors.backgroundColor,
