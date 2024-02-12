@@ -45,7 +45,7 @@ class DatabaseHelper  {
   void _createDb(Database db, int newVersion) async {
 
     await db.execute(
-        'CREATE TABLE IF NOT EXISTS toDoTable( id INTEGER PRIMARY KEY AUTOINCREMENT, toDoKey TEXT, toDoTitle TEXT, toDoDetails TEXT, toDoCreatedTime TEXT, toDoUploaded INTEGER, toDoCompleted INTEGER)');
+        'CREATE TABLE IF NOT EXISTS toDoTable( id INTEGER PRIMARY KEY AUTOINCREMENT, toDoKey TEXT, toDoTitle TEXT, toDoDetails TEXT, toDoCreatedTime TEXT, toDoUploaded INTEGER, toDoCompleted INTEGER, uuid TEXT)');
     await db.execute(
         'CREATE TABLE IF NOT EXISTS userUUiDTable( id INTEGER PRIMARY KEY AUTOINCREMENT, uuid TEXT)');
 
@@ -66,6 +66,12 @@ class DatabaseHelper  {
     }
   }
   void _versionOne(Database db) async {
+    try{
+      await db.rawQuery("SELECT userUUiDTable FROM uuid");
+    } on DatabaseException catch(e){
+      // print("Error : $e");
+      await db.execute("ALTER TABLE userUUiDTable ADD COLUMN uuid TEXT");
+    }
       await db.execute(
           'CREATE TABLE IF NOT EXISTS userUUiDTable( id INTEGER PRIMARY KEY AUTOINCREMENT, uuid TEXT)');
   }

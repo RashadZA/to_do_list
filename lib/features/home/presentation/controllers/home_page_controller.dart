@@ -2,10 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_list/core/internet.dart';
+import 'package:to_do_list/core/localDatabase/user_uuid_table.dart';
 import 'package:to_do_list/core/utils/design_utils.dart';
 import 'package:to_do_list/features/home/data/local/to_do_table.dart';
 import 'package:to_do_list/features/home/data/models/to_do_model.dart';
+import 'package:to_do_list/features/home/data/remote/data_from_friebase.dart';
 import 'package:uuid/uuid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePageController extends GetxController {
   final TextEditingController searchTextEditController =
@@ -21,11 +25,13 @@ class HomePageController extends GetxController {
   RxBool searchButtonIsTapped = false.obs;
 
   RxBool dialogAddButtonIsTapped = false.obs;
-
-  RxBool gettingToDoData = false.obs;
-  RxBool updatingToDoAsCompletedOrNot = false.obs;
+  RxString userUUID = "".obs;
 
   RxList<ToDoModel> toDoList = <ToDoModel>[].obs;
+  FocusNode searchFieldFocusNode = FocusNode();
+
+  FocusNode dialogTitleFocusNode = FocusNode();
+  FocusNode dialogDescriptionFocusNode = FocusNode();
 
   @override
   void onInit() {
@@ -34,56 +40,41 @@ class HomePageController extends GetxController {
   }
 
   Future<void> init() async {
-    gettingToDoData.value = true;
-    await getData();
-    gettingToDoData.value = false;
-  }
-  Future<void> onRefresh() async {
-    searchTextEditController.clear();
-    getData();
+    userUUID.value = Get.parameters[userUuid] ?? "";
   }
 
-  Future<void> getData() async {
-    toDoList.value = await ToDoTable().getToDoList();
-  }
   Future<void> searchButtonOnPressed() async {
-    if(searchTextEditController.text.isNotEmpty){
-      gettingToDoData.value = true;
-      toDoList.value = await ToDoTable().getToDoAccordingToTitle(searchTextEditController.text);
-      if(toDoList.isEmpty){
+    searchFieldFocusNode.unfocus();
+    if (searchTextEditController.text.isNotEmpty) {
+      toDoList.value = await ToDoTable()
+          .getToDoAccordingToTitle(searchTextEditController.text);
+      if (toDoList.isEmpty) {
         "No todo found according to title you enter".infoSnackBar();
-        await getData();
       }
-      gettingToDoData.value = false;
     }
   }
 
   Future<void> toDoListTileIsTapped(ToDoModel todo) async {
-    updatingToDoAsCompletedOrNot.value = true;
-    await ToDoTable().updateToDoStatus(todo);
-    await getData();
-    updatingToDoAsCompletedOrNot.value = false;
+    DataFromFirebase.updateTodo(todo, completed: !todo.toDoCompleted);
   }
 
   Future<void> dialogAddButtonOnPressed() async {
     dialogAddButtonIsTapped.value = true;
+
     if (toDoListFormKey.currentState!.validate()) {
-      String todoId = const Uuid().v1();
-      await ToDoTable().insertToDo(
-        todoKey: todoId,
-        todoTitle: toDoListTitleTextEditController.text,
-        todoDetails: toDoListDescriptionTextEditController.text,
-        todoCreatedTime: "${DateTime.now()}",
-        todoCompleted: 0,
-        todoUploaded: 0,
-      );
+      DataFromFirebase.createTodoList(
+          userUUID: userUUID.value,
+          title: toDoListTitleTextEditController.text,
+          details: toDoListDescriptionTextEditController.text);
+      dialogTitleFocusNode.unfocus();
+      dialogDescriptionFocusNode.unfocus();
       toDoListTitleTextEditController.clear();
       toDoListDescriptionTextEditController.clear();
-      await getData();
+      // await getData();
       Get.back();
+      // }
     }
     dialogAddButtonIsTapped.value = false;
-
   }
 
   Future<void> dialogCancelButtonOnPressed() async {

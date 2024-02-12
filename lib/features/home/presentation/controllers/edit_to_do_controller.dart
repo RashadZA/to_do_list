@@ -36,7 +36,7 @@ class EditToDoPageController extends GetxController {
     if (editToDoListTitleTextEditController.text != toDo.toDoTitle ||
         editToDoListDescriptionTextEditController.text != toDo.toDoDetails) {
      await ToDoTable().updateToDoFullDetails(
-        todoID: toDo.id,
+        todoID: toDo.uuid,
         todoKey: toDo.toDoKey,
         todoTitle: editToDoListTitleTextEditController.text,
         todoDetails: editToDoListDescriptionTextEditController.text,

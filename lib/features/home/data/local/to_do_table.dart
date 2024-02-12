@@ -6,6 +6,7 @@ import 'package:to_do_list/features/home/data/models/to_do_model.dart';
 class ToDoTable {
   String toDoTable = 'toDoTable';
   String id = 'id';
+  String uuid = 'uuid';
   String toDoKey = 'toDoKey';
   String toDoTitle = 'toDoTitle';
   String toDoDetails = 'toDoDetails';
@@ -26,21 +27,16 @@ class ToDoTable {
   }
 
   Future insertToDo({
-    required String todoKey,
-    required String todoTitle,
-    required String todoDetails,
-    required String todoCreatedTime,
-    required int todoCompleted,
-    required int todoUploaded,
+  required ToDoModel todoModel,
   }) async {
     Database db = await DatabaseHelper().database;
     Map<String, Object?> row = {
-      toDoKey: todoKey,
-      toDoTitle: todoTitle,
-      toDoDetails: todoDetails,
-      toDoCreatedTime: todoCreatedTime,
-      toDoCompleted: todoCompleted,
-      toDoUploaded: todoUploaded,
+      toDoKey: todoModel.toDoKey,
+      toDoTitle: todoModel.toDoTitle,
+      toDoDetails: todoModel.toDoDetails,
+      toDoCreatedTime: todoModel.toDoCreatedTime,
+      toDoCompleted: todoModel.toDoCompleted == false ? 0 : 1,
+      toDoUploaded: todoModel.toDoUploaded == false ? 0 : 1,
     };
     int result = await db.insert(
       toDoTable,
@@ -53,7 +49,7 @@ class ToDoTable {
   Future updateToDoStatus(ToDoModel toDoModel) async {
     Database db = await DatabaseHelper().database;
     int result = await db.rawUpdate(
-        "UPDATE $toDoTable SET $toDoCompleted = ${toDoModel.toDoCompleted != true ? 1 : 0} WHERE $id == ${toDoModel.id} AND $toDoKey == '${toDoModel.toDoKey}'");
+        "UPDATE $toDoTable SET $toDoCompleted = ${toDoModel.toDoCompleted != true ? 1 : 0} WHERE $id == ${toDoModel.uuid} AND $toDoKey == '${toDoModel.toDoKey}'");
     debugPrint("Result in updating todo: $result");
     return result;
   }
@@ -101,7 +97,7 @@ class ToDoTable {
   Future deleteToDo(ToDoModel todoModel) async {
     Database db = await DatabaseHelper().database;
     int result = await db.rawDelete(
-        "DELETE FROM $toDoTable WHERE $id = ${todoModel.id} AND $toDoKey = '${todoModel.toDoKey}'"
+        "DELETE FROM $toDoTable WHERE $id = ${todoModel.uuid} AND $toDoKey = '${todoModel.toDoKey}'"
     );
     debugPrint("Result in delete todo: $result");
     return result;

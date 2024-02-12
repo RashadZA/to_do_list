@@ -28,6 +28,7 @@ class AddToDoListDialog extends GetWidget<HomePageController> {
               CoreTextField(
                 hintText: 'Title',
                 maxLines: 3,
+                focusNode: controller.dialogTitleFocusNode,
                 fillColor: AppColors.backgroundColor,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
@@ -39,6 +40,7 @@ class AddToDoListDialog extends GetWidget<HomePageController> {
                 hintText: 'Description',
                 maxLines: 5,
                 fillColor: AppColors.backgroundColor,
+                focusNode: controller.dialogDescriptionFocusNode,
                 controller: controller.toDoListDescriptionTextEditController,
                 validator: AppValidators.emptyNullValidator,
                 keyboardType: TextInputType.text,
