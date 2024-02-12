@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_list/core/utils/design_utils.dart';
 import 'package:to_do_list/features/home/data/local/to_do_table.dart';
 import 'package:to_do_list/features/home/data/models/to_do_model.dart';
 import 'package:uuid/uuid.dart';
@@ -46,9 +47,15 @@ class HomePageController extends GetxController {
     toDoList.value = await ToDoTable().getToDoList();
   }
   Future<void> searchButtonOnPressed() async {
-    gettingToDoData.value = true;
-    toDoList.value = await ToDoTable().getToDoAccordingToTitle(searchTextEditController.text);
-    gettingToDoData.value = false;
+    if(searchTextEditController.text.isNotEmpty){
+      gettingToDoData.value = true;
+      toDoList.value = await ToDoTable().getToDoAccordingToTitle(searchTextEditController.text);
+      if(toDoList.isEmpty){
+        "No todo found according to title you enter".infoSnackBar();
+        await getData();
+      }
+      gettingToDoData.value = false;
+    }
   }
 
   Future<void> toDoListTileIsTapped(ToDoModel todo) async {

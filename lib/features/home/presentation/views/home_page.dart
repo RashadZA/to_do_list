@@ -27,7 +27,7 @@ class HomePage extends GetWidget<HomePageController> {
                         height: 40,
                       ),
                       CoreTextField(
-                        hintText: "Search",
+                        hintText: "Enter Todo Title",
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.emailAddress,
                         controller: controller.searchTextEditController,
