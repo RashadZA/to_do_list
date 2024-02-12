@@ -57,6 +57,9 @@ dependencies:
   # For fast generation of RFC4122 UUIDs
   uuid: ^4.3.3
 
+  # Firebase packages:
+  firebase_core: ^2.25.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
