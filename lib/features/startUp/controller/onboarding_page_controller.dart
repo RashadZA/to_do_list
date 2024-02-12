@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:to_do_list/core/localDatabase/database_helper.dart';
+import 'package:to_do_list/core/localDatabase/user_uuid_table.dart';
 import 'package:to_do_list/core/routes/app_pages.dart';
 import 'package:to_do_list/core/utils/design_utils.dart';
+import 'package:uuid/uuid.dart';
 
 class OnboardingPageController extends GetxController {
 
@@ -29,6 +31,10 @@ class OnboardingPageController extends GetxController {
     if(status.isGranted){
       Database db = await DatabaseHelper().database;
       debugPrint("Database Status: ${db.isOpen}");
+      String uuid = const Uuid().v1();
+      debugPrint("Database uuid: $uuid");
+      await UserUUIDTable().deleteUserUUID();
+      await UserUUIDTable().insertUserUUID(uuId: uuid);
       getStartButtonIsTapped.value = false;
       Get.offAllNamed(Routes.home);
     }else{

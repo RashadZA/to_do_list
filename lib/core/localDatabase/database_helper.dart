@@ -24,7 +24,7 @@ class DatabaseHelper  {
   Future<Database> get database async {
     String savePath = await folder.getDBDirectoryPath();
     if (await File(savePath).exists()) {
-      _database = await openDatabase(savePath, version: 1,onUpgrade: _upgradeDB,onDowngrade: onDatabaseDowngradeDelete);
+      _database = await openDatabase(savePath, version: 2,onUpgrade: _upgradeDB,onDowngrade: onDatabaseDowngradeDelete);
       // print("DB exists: $savePath");
       return _database!;
     } else {
@@ -37,7 +37,7 @@ class DatabaseHelper  {
     String path = await folder.createDBDirectory();
     // print("DB Created: $path");
     var restaurantDatabase = await openDatabase(
-        path, version: 1,onCreate: _createDb);
+        path, version: 2,onCreate: _createDb);
     return restaurantDatabase;
   }
 
@@ -46,6 +46,8 @@ class DatabaseHelper  {
 
     await db.execute(
         'CREATE TABLE IF NOT EXISTS toDoTable( id INTEGER PRIMARY KEY AUTOINCREMENT, toDoKey TEXT, toDoTitle TEXT, toDoDetails TEXT, toDoCreatedTime TEXT, toDoUploaded INTEGER, toDoCompleted INTEGER)');
+    await db.execute(
+        'CREATE TABLE IF NOT EXISTS userUUiDTable( id INTEGER PRIMARY KEY AUTOINCREMENT, uuid TEXT)');
 
   }
 
@@ -64,12 +66,8 @@ class DatabaseHelper  {
     }
   }
   void _versionOne(Database db) async {
-    try{
-      await db.rawQuery("SELECT toDoCompleted FROM toDoTable");
-    } on DatabaseException catch(e){
-      debugPrint("Error : $e");
-      await db.execute("ALTER TABLE toDoTable ADD COLUMN toDoCompleted BOOLEAN");
-    }
+      await db.execute(
+          'CREATE TABLE IF NOT EXISTS userUUiDTable( id INTEGER PRIMARY KEY AUTOINCREMENT, uuid TEXT)');
   }
 
 }
