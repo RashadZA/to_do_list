@@ -47,8 +47,6 @@ class ToDoModel {
   }
 
 
-  // String toJson() => json.encode(toMap());
-
   factory ToDoModel.fromJson(String source) => ToDoModel.fromMapDataToModel(json.decode(source) as Map<String, dynamic>);
 
   factory ToDoModel.defaultModel() {
@@ -62,11 +60,23 @@ class ToDoModel {
       toDoCompleted: false,
     );
   }
-  @override
-  String toString() {
-    return '{"uuid": "$uuid", "toDoKey": "$toDoKey", "toDoTitle": "$toDoTitle", "toDoDetails": "$toDoDetails", "toDoCreatedTime": "$toDoCreatedTime", "toDoUploaded": $toDoUploaded, "toDoCompleted": $toDoCompleted}';
-  }
+
   factory ToDoModel.fromSnapshotToModel(DocumentSnapshot snapshot) {
+    final snap = snapshot.data() as Map<String, dynamic>;
+    debugPrint("TodoModel snap: $snap");
+    return ToDoModel(
+      uuid: snap['uuid'],
+      toDoKey: snap['toDoKey'],
+      toDoTitle: snap['toDoTitle'],
+      toDoDetails: snap['toDoDetails'],
+      toDoCreatedTime: snap['toDoCreatedTime'],
+      toDoUploaded: snap['toDoUploaded'],
+      toDoCompleted: snap['toDoCompleted'],
+    );
+  }
+
+  factory ToDoModel.fromSearchFieldSnapshotToModel(
+      {required DocumentSnapshot snapshot, required String searchTitle}) {
     final snap = snapshot.data() as Map<String, dynamic>;
     debugPrint("TodoModel snap: $snap");
     return ToDoModel(

@@ -27,7 +27,10 @@ class EditToDoPage extends GetWidget<EditToDoPageController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                        onPressed: () => Get.offAllNamed(Routes.home),
+                        onPressed: () =>
+                            Get.offAllNamed(Routes.home, parameters: {
+                              userUuid: controller.toDo.uuid,
+                            }),
                         icon: const Icon(
                           Icons.arrow_back_ios_new_outlined,
                           size: 30,
@@ -38,15 +41,16 @@ class EditToDoPage extends GetWidget<EditToDoPageController> {
                       style: AppTextTheme.text22
                           .copyWith(fontWeight: FontWeight.w700),
                     ),
-                    Obx(() => IconButton(
+                    IconButton(
                       onPressed: controller.deleteButtonOnPressedFunction,
-                      icon:  Icon(
+                      icon: Icon(
                         Icons.delete,
                         size: 30,
                         color: controller.makingChangesInToDo.isTrue
-                            ? AppColors.transparent : AppColors.redAccent,
+                            ? AppColors.transparent
+                            : AppColors.redAccent,
                       ),
-                    ),),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -54,12 +58,34 @@ class EditToDoPage extends GetWidget<EditToDoPageController> {
                 ),
                 Column(
                   children: [
+                    SizedBox(
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Task Completed",
+                            style: AppTextTheme.text18,
+                          ),
+                          Obx(
+                            () => DropdownButton<bool>(
+                              value: controller.dropDownValue.value,
+                              items: controller.dropdownItems,
+                              onChanged: (value) =>
+                                  controller.changeDropdownValue(value),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).paddingOnly(bottom: 20),
                     CoreTextField(
                       hintText: 'Title',
                       minLines: 2,
                       maxLines: 5,
-                      fillColor: AppColors.backgroundColor,
+                      fillColor: AppColors.white,
                       keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      focusNode: controller.titleFocusNode,
                       controller:
                           controller.editToDoListTitleTextEditController,
                       validator: AppValidators.emptyNullValidator,
@@ -69,7 +95,8 @@ class EditToDoPage extends GetWidget<EditToDoPageController> {
                       hintText: 'Description',
                       minLines: 7,
                       maxLines: 15,
-                      fillColor: AppColors.backgroundColor,
+                      fillColor: AppColors.white,
+                      focusNode: controller.descriptionFocusNode,
                       controller:
                           controller.editToDoListDescriptionTextEditController,
                       validator: AppValidators.emptyNullValidator,
@@ -82,11 +109,10 @@ class EditToDoPage extends GetWidget<EditToDoPageController> {
             ));
           },
         ),
-        floatingActionButton: Obx(() => defaultFloatingActionButton(
+        floatingActionButton: defaultFloatingActionButton(
           isLoading: controller.makingChangesInToDo.value,
-            onPressed: () => controller.addButtonOnPressedFunction(),
-            icon: Icons.done_all_rounded,
-        ),
+          onPressed: () => controller.addButtonOnPressedFunction(),
+          icon: Icons.done_all_rounded,
         ),
       ),
     );

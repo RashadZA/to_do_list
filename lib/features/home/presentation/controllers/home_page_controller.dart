@@ -8,6 +8,7 @@ import 'package:to_do_list/core/utils/design_utils.dart';
 import 'package:to_do_list/features/home/data/local/to_do_table.dart';
 import 'package:to_do_list/features/home/data/models/to_do_model.dart';
 import 'package:to_do_list/features/home/data/remote/data_from_friebase.dart';
+import 'package:to_do_list/features/home/presentation/widgets/searchfield_bottomsheet.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -46,10 +47,21 @@ class HomePageController extends GetxController {
   Future<void> searchButtonOnPressed() async {
     searchFieldFocusNode.unfocus();
     if (searchTextEditController.text.isNotEmpty) {
-      toDoList.value = await ToDoTable()
-          .getToDoAccordingToTitle(searchTextEditController.text);
+      toDoList.value = await DataFromFirebase.getSearchToDoList(
+        userUUID: userUUID.value,
+        todoTitle: searchTextEditController.text,
+      );
       if (toDoList.isEmpty) {
         "No todo found according to title you enter".infoSnackBar();
+      }else{
+        Get.bottomSheet(
+            SearchFieldBottomSheet(todoList: toDoList,),
+          backgroundColor: AppColors.white,
+          elevation: 0,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15),),
+          ),
+        );
       }
     }
   }

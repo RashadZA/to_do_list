@@ -42,14 +42,14 @@ class HomePage extends GetWidget<HomePageController> {
                     : defaultLoader(
                     color: AppColors.primaryColor),
               ).paddingOnly(left: 16, right: 16),
-              Expanded(
-                child: StreamBuilder<List<ToDoModel>>(
-                    stream: DataFromFirebase.getTodoList(
-                        userUUID: controller.userUUID.value),
-                    builder: (context, AsyncSnapshot<List<ToDoModel>> snapshot) {
-                      if(snapshot.hasData){
-                        debugPrint("snapshot.data: ${snapshot.data?.length}");
-                        return TransformableListView.builder(
+              StreamBuilder<List<ToDoModel>>(
+                  stream: DataFromFirebase.getTodoList(
+                      userUUID: controller.userUUID.value),
+                  builder: (context, AsyncSnapshot<List<ToDoModel>> snapshot) {
+                    if(snapshot.hasData){
+                      debugPrint("snapshot.data: ${snapshot.data?.length}");
+                      return snapshot.data!.isEmpty ? noTodo() : Expanded(
+                        child: TransformableListView.builder(
                           itemCount: snapshot.data!.length,
                           padding: EdgeInsets.fromLTRB(
                             16,
@@ -71,7 +71,8 @@ class HomePage extends GetWidget<HomePageController> {
                               ),
                               trailing: IconButton(
                                 onPressed: () => Get.toNamed(Routes.editToDo, parameters: {
-                                  "todo": todo.toString(),
+                                  userUuid: todo.uuid,
+                                  todoUuidKey: todo.toDoKey
                                 },),
                                 icon: const Icon(Icons.edit),
                               ),
@@ -88,14 +89,12 @@ class HomePage extends GetWidget<HomePageController> {
                               ),
                             ).defaultContainer().paddingSymmetric(vertical: 10);
                           },
-                        );
-                      }else if(!snapshot.hasData){
-                        noTodo();
-                      }
-                      return defaultLoader(radius: 40,color: AppColors.primaryColor);
+                        ),
+                      );
+                    }
+                    return Expanded(child: defaultLoader(radius: 40,color: AppColors.primaryColor));
 
-                    }),
-              ),
+                  }),
 
             ],
           ),);

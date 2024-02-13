@@ -36,7 +36,9 @@ class OnboardingPageController extends GetxController {
       await UserUUIDTable().deleteUserUUID();
       await UserUUIDTable().insertUserUUID(uuId: uuid);
       getStartButtonIsTapped.value = false;
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.home,parameters: {
+        userUuid : uuid,
+      },);
     }else{
       "Please give storage permission for creating database for saving to do list".infoSnackBar();
       if(status.isPermanentlyDenied){
