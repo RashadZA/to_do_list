@@ -21,6 +21,8 @@ class EditToDoPageController extends GetxController {
   FocusNode titleFocusNode = FocusNode();
   FocusNode descriptionFocusNode = FocusNode();
 
+  RxBool dropDownValue = false.obs;
+
   @override
   void onInit() {
     init();
@@ -39,7 +41,7 @@ class EditToDoPageController extends GetxController {
     toDo =
         await DataFromFirebase.getTodoDetails(userUUID: uuid, todoKey: todoKey);
     // debugPrint("In Edit Page: $todoString");
-    // toDo = ToDoModel.fromJson(todoString.value);
+    dropDownValue.value = toDo.toDoCompleted;
     editToDoListTitleTextEditController.text = toDo.toDoTitle;
     editToDoListDescriptionTextEditController.text = toDo.toDoDetails;
     update();
@@ -74,7 +76,6 @@ class EditToDoPageController extends GetxController {
     });
   }
 
-  RxBool dropDownValue = false.obs;
   List<DropdownMenuItem<bool>> get dropdownItems {
     List<DropdownMenuItem<bool>> menuItems = [
       DropdownMenuItem(value: true, child: Text("True",style: AppTextTheme.text16,),),

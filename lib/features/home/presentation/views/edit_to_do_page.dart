@@ -104,7 +104,7 @@ class EditToDoPage extends GetWidget<EditToDoPageController> {
                       textInputAction: TextInputAction.done,
                     )
                   ],
-                ).paddingSymmetric(horizontal: 15),
+                ).paddingOnly(left: 15,right: 15, bottom: 30),
               ],
             ));
           },

@@ -52,7 +52,7 @@ class HomePageController extends GetxController {
         todoTitle: searchTextEditController.text,
       );
       if (toDoList.isEmpty) {
-        "No todo found according to title you enter".infoSnackBar();
+        "No todo found according to: ${searchTextEditController.text}".infoSnackBar();
       }else{
         Get.bottomSheet(
             SearchFieldBottomSheet(todoList: toDoList,),
@@ -64,6 +64,7 @@ class HomePageController extends GetxController {
         );
       }
     }
+    searchTextEditController.clear();
   }
 
   Future<void> toDoListTileIsTapped(ToDoModel todo) async {
